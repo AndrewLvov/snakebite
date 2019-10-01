@@ -1452,7 +1452,7 @@ class HAClient(Client):
         self.failovers += 1
 
     def _switch_namenode(self, namenodes):
-        while (True):
+        while True:
             for namenode in namenodes:
                 self._check_failover(namenodes)
                 log.debug("Switch to namenode: %s:%d" % (namenode.host, namenode.port))
@@ -1467,11 +1467,10 @@ class HAClient(Client):
                                                      self.sock_request_timeout,
                                                      self.use_datanode_hostname)
 
-
     def __calculate_exponential_time(self, time, retries, cap):
         # Same calculation as the original Hadoop client but converted to seconds
-        baseTime = min(time * (1L << retries), cap);
-        return (baseTime * (random.random() + 0.5)) / 1000;
+        baseTime = min(time * (1 << retries), cap)
+        return (baseTime * (random.random() + 0.5)) / 1000
 
     def __do_retry_sleep(self, retries):
         # Don't wait for the first retry.
